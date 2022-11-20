@@ -1,0 +1,57 @@
+# Template file for 'lua54-cliargs'
+pkgname=lua54-cliargs
+version=3.0.2
+revision=1
+_version=3.0-2
+hostmakedepends="luarocks-lua51 luarocks-lua52 luarocks-lua53 luarocks-lua54"
+makedepends="lua54-devel lua53-devel lua52-devel lua51-devel"
+depends="lua54"
+_desc="A command-line argument parsing module for Lua. "
+short_desc="${_desc} (5.4.x)"
+maintainer="Daniele Parisi <danieleparisi@mailfence.com>"
+license="MIT"
+homepage="https://github.com/amireh/lua_cliargs"
+distfiles="https://github.com/amireh/lua_cliargs/archive/v${_version}.tar.gz"
+checksum=971d6f1440a55bdf9db581d4b2bcbf472a301d76f696a0d0ed9423957c7d176e
+
+do_install() {
+	for lver in 5.1 5.2 5.3 5.4; do
+		luarocks-$lver make \
+					   --no-manifest \
+					   --deps-mode=none \
+					   --tree="${DESTDIR}/usr" \
+					   lua_cliargs-${_version}.rockspec
+	done
+	rm -r ${DESTDIR}/usr/lib
+}
+
+post_install() {
+	vlicense "${wrksrc}/LICENSE"
+}
+
+lua53-cliargs_package() {
+	depends="lua53"
+	short_desc="${_desc} (5.3.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.3
+		vlicense "${wrksrc}/LICENSE"
+	}
+}
+
+lua52-cliargs_package() {
+	depends="lua52"
+	short_desc="${_desc} (5.2.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.2
+		vlicense "${wrksrc}/LICENSE"
+	}
+}
+
+lua51-cliargs_package() {
+	depends="lua51"
+	short_desc="${_desc} (5.1.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.1
+		vlicense "${wrksrc}/LICENSE"
+	}
+}
