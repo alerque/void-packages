@@ -1,0 +1,53 @@
+# Template file for 'lua54-cosmo'
+pkgname=lua54-cosmo
+version=16.06.04
+revision=1
+hostmakedepends="luarocks-lua51 luarocks-lua52 luarocks-lua53 luarocks-lua54"
+makedepends="lua54-devel lua53-devel lua52-devel lua51-devel"
+depends="lua54 lua54-lpeg"
+_desc="Safe templates for Lua"
+short_desc="${_desc} (5.4.x)"
+maintainer="Daniele Parisi <danieleparisi@mailfence.com>"
+license="MIT"
+homepage="https://github.com/mascarenhas/cosmo"
+distfiles="https://github.com/mascarenhas/cosmo/archive/refs/tags/v${version}.tar.gz
+	https://spdx.org/licenses/MIT.txt"
+checksum=86d17aea5080a90671d965cffeb9b104c19e0e1ea55c08687c0924c4512b52b1
+
+do_install() {
+	for lver in 5.1 5.2 5.3 5.4; do
+		luarocks-$lver make \
+					   --no-manifest \
+					   --deps-mode=none \
+					   --tree="${DESTDIR}/usr" \
+					   rockspec/cosmo-${version}-1.rockspec
+	done
+	rm -r ${DESTDIR}/usr/lib
+}
+
+lua53-cosmo_package() {
+	depends="lua53 lua53-lpeg"
+	short_desc="${_desc} (5.3.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.3
+		vlicense MIT.txt
+	}
+}
+
+lua52-cosmo_package() {
+	depends="lua52 lua52-lpeg"
+	short_desc="${_desc} (5.2.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.2
+		vlicense MIT.txt
+	}
+}
+
+lua51-cosmo_package() {
+	depends="lua51 lua51-lpeg"
+	short_desc="${_desc} (5.1.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.1
+		vlicense MIT.txt
+	}
+}
