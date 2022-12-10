@@ -26,17 +26,8 @@ do_install() {
 	vlicense LICENSE.md
 }
 
-lua54-penlight_package() {
-	depends="lua54"
-	short_desc="${_desc} (5.4.x)"
-	pkg_install() {
-		vmove usr/lib/lua/5.4
-		vlicense LICENSE.md
-	}
-}
-
 lua53-penlight_package() {
-	depends="lua53"
+	depends="lua53 lua53-luafilesystem"
 	short_desc="${_desc} (5.3.x)"
 	pkg_install() {
 		vmove usr/lib/lua/5.3
@@ -45,7 +36,7 @@ lua53-penlight_package() {
 }
 
 lua52-penlight_package() {
-	depends="lua52"
+	depends="lua52 lua52-luafilesystem"
 	short_desc="${_desc} (5.2.x)"
 	pkg_install() {
 		vmove usr/lib/lua/5.2
@@ -54,7 +45,7 @@ lua52-penlight_package() {
 }
 
 lua51-penlight_package() {
-	depends="lua51"
+	depends="lua51 lua51-luafilesystem"
 	short_desc="${_desc} (5.1.x)"
 	pkg_install() {
 		vmove usr/lib/lua/5.1
