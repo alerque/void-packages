@@ -12,7 +12,9 @@ license="MIT"
 homepage="https://github.com/mascarenhas/cosmo"
 distfiles="https://github.com/mascarenhas/cosmo/archive/refs/tags/v${version}.tar.gz
 	https://spdx.org/licenses/MIT.txt"
-checksum=86d17aea5080a90671d965cffeb9b104c19e0e1ea55c08687c0924c4512b52b1
+checksum="86d17aea5080a90671d965cffeb9b104c19e0e1ea55c08687c0924c4512b52b1
+ c3b1b78bc8bd3ea13aa4bc9778442d16560270afa235006d816e5e88cef24db4"
+build_wrksrc="cosmo-${version}"
 
 do_install() {
 	for lver in 5.1 5.2 5.3 5.4; do
@@ -25,12 +27,16 @@ do_install() {
 	rm -r ${DESTDIR}/usr/lib
 }
 
+post_install() {
+	vlicense $wrksrc/MIT.txt
+}
+
 lua53-cosmo_package() {
 	depends="lua53 lua53-lpeg"
 	short_desc="${_desc} (5.3.x)"
 	pkg_install() {
 		vmove usr/share/lua/5.3
-		vlicense MIT.txt
+		vlicense $wrksrc/MIT.txt
 	}
 }
 
@@ -39,7 +45,7 @@ lua52-cosmo_package() {
 	short_desc="${_desc} (5.2.x)"
 	pkg_install() {
 		vmove usr/share/lua/5.2
-		vlicense MIT.txt
+		vlicense $wrksrc/MIT.txt
 	}
 }
 
@@ -48,6 +54,6 @@ lua51-cosmo_package() {
 	short_desc="${_desc} (5.1.x)"
 	pkg_install() {
 		vmove usr/share/lua/5.1
-		vlicense MIT.txt
+		vlicense $wrksrc/MIT.txt
 	}
 }
