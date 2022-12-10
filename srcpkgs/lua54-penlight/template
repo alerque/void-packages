@@ -1,0 +1,63 @@
+# Template file for 'lua54-penlight'
+pkgname=lua54-penlight
+version=1.13.1
+revision=1
+depends="lua54 lua54-luafilesystem"
+_desc="Lua libraries for extended operations on tables, lists and strings"
+short_desc="${_desc} (5.4.x)"
+maintainer="Daniele Parisi <danieleparisi@mailfence.com>"
+license="MIT"
+homepage="https://lunarmodules.github.io/Penlight/"
+distfiles="https://github.com/lunarmodules/Penlight/archive/${version}/lua-penlight-${version}.tar.gz"
+checksum=530380e1a377df519c2e589f47823f79701f8e0e67f6bbd994e18d09a470b680
+
+post_extract() {
+	mv lua lua54
+	cp -a lua54 lua53
+	cp -a lua54 lua52
+	cp -a lua54 lua51
+}
+
+do_install() {
+	for x in lua54 lua53 lua52 lua51; do
+		vmkdir "usr/lib/lua/5.${x#lua5}"
+		vcopy "$x/pl" "usr/lib/lua/5.${x#lua5}"
+	done
+	vlicense LICENSE.md
+}
+
+lua54-penlight_package() {
+	depends="lua54"
+	short_desc="${_desc} (5.4.x)"
+	pkg_install() {
+		vmove usr/lib/lua/5.4
+		vlicense LICENSE.md
+	}
+}
+
+lua53-penlight_package() {
+	depends="lua53"
+	short_desc="${_desc} (5.3.x)"
+	pkg_install() {
+		vmove usr/lib/lua/5.3
+		vlicense LICENSE.md
+	}
+}
+
+lua52-penlight_package() {
+	depends="lua52"
+	short_desc="${_desc} (5.2.x)"
+	pkg_install() {
+		vmove usr/lib/lua/5.2
+		vlicense LICENSE.md
+	}
+}
+
+lua51-penlight_package() {
+	depends="lua51"
+	short_desc="${_desc} (5.1.x)"
+	pkg_install() {
+		vmove usr/lib/lua/5.1
+		vlicense LICENSE.md
+	}
+}
