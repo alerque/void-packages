@@ -1,0 +1,57 @@
+# Template file for 'lua54-vstruct'
+pkgname=lua54-vstruct
+version=2.1.1
+revision=1
+hostmakedepends="luarocks-lua51 luarocks-lua52 luarocks-lua53 luarocks-lua54"
+makedepends="lua54-devel lua53-devel lua52-devel lua51-devel"
+depends="lua54"
+depends="lua54"
+_desc="Lua library to manipulate binary data"
+short_desc="${_desc} (5.4.x)"
+maintainer="Daniele Parisi <danieleparisi@mailfence.com>"
+license="MIT"
+homepage="https://github.com/ToxicFrog/vstruct"
+distfiles="https://github.com/ToxicFrog/vstruct/archive/refs/tags/v${version}.tar.gz"
+checksum=029ae887fc3c59279f378a499741811976d90f9a806569a42f4de80ad349f333
+
+do_install() {
+	for lver in 5.1 5.2 5.3 5.4; do
+		luarocks-$lver make \
+					   --no-manifest \
+					   --deps-mode=none \
+					   --tree="${DESTDIR}/usr" \
+					   vstruct-${version}-1.rockspec
+	done
+	rm -r ${DESTDIR}/usr/lib
+}
+
+post_install() {
+	vlicense "${wrksrc}/COPYING"
+}
+
+lua53-vstruct_package() {
+	depends="lua53"
+	short_desc="${_desc} (5.3.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.3
+		vlicense "${wrksrc}/COPYING"
+	}
+}
+
+lua52-vstruct_package() {
+	depends="lua52"
+	short_desc="${_desc} (5.2.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.2
+		vlicense "${wrksrc}/COPYING"
+	}
+}
+
+lua51-vstruct_package() {
+	depends="lua51"
+	short_desc="${_desc} (5.1.x)"
+	pkg_install() {
+		vmove usr/share/lua/5.1
+		vlicense "${wrksrc}/COPYING"
+	}
+}
